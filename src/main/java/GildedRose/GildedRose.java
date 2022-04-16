@@ -17,30 +17,28 @@ class GildedRose {
         }
     }
 
+    public void countQuality(Item item, int adjust) {
+        int adjustQuality = item.quality + adjust;
+        if (adjustQuality >= 0 && adjustQuality <= 50) {
+            item.quality = adjustQuality;
+        }
+    }
+
     public void updateItemQuality(Item item) {
-        if (!item.name.equals(AGED_BRIE)
-                && !item.name.equals(BACKSTAGE)) {
-            if (item.quality > 0) {
-                if (!item.name.equals(SULFURAS)) {
-                    item.quality = item.quality - 1;
-                }
+        if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE)) {
+            if (!item.name.equals(SULFURAS)) {
+                countQuality(item, -1);
             }
         } else {
-            if (item.quality < 50) {
-                item.quality = item.quality + 1;
+            countQuality(item, 1);
 
-                if (item.name.equals(BACKSTAGE)) {
-                    if (item.sellIn < 11) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
+            if (item.name.equals(BACKSTAGE)) {
+                if (item.sellIn < 11) {
+                    countQuality(item, 1);
+                }
 
-                    if (item.sellIn < 6) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
+                if (item.sellIn < 6) {
+                    countQuality(item, 1);
                 }
             }
         }
@@ -52,18 +50,14 @@ class GildedRose {
         if (item.sellIn < 0) {
             if (!item.name.equals(AGED_BRIE)) {
                 if (!item.name.equals(BACKSTAGE)) {
-                    if (item.quality > 0) {
-                        if (!item.name.equals(SULFURAS)) {
-                            item.quality = item.quality - 1;
-                        }
+                    if (!item.name.equals(SULFURAS)) {
+                        countQuality(item, -1);
                     }
                 } else {
                     item.quality = item.quality - item.quality;
                 }
             } else {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1;
-                }
+                countQuality(item, 1);
             }
         }
     }
