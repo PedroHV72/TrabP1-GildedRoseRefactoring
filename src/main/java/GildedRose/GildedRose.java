@@ -28,21 +28,13 @@ class GildedRose {
     public void updateItemQuality(Item item) {
         int conjuredQuality = item.name.equals(CONJURED) ? -2 : -1;
 
-        if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE)) {
-            if (!item.name.equals(SULFURAS)) {
-                countQuality(item, conjuredQuality);
-            }
+        if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE) && !item.name.equals(SULFURAS)) {
+            countQuality(item, conjuredQuality);
         } else {
             countQuality(item, 1);
 
-            if (item.name.equals(BACKSTAGE)) {
-                if (item.sellIn < 11) {
-                    countQuality(item, 1);
-                }
-
-                if (item.sellIn < 6) {
-                    countQuality(item, 1);
-                }
+            if (item.name.equals(BACKSTAGE) && item.sellIn < 11) {
+                countQuality(item, 1);
             }
         }
 
